@@ -1,0 +1,13 @@
+--- kubernetes-1.0.4/Godeps/_workspace/src/github.com/elazarl/go-bindata-assetfs/assetfs.go.orig	2015-08-25 21:08:30.000000000 +0000
++++ kubernetes-1.0.4/Godeps/_workspace/src/github.com/elazarl/go-bindata-assetfs/assetfs.go	2015-09-14 23:45:21.316447019 +0000
+@@ -70,6 +70,10 @@
+ 	return nil, errors.New("not a directory")
+ }
+ 
++func (f *AssetFile) Size() int64 {
++	return f.FakeFile.Size()
++}
++
+ func (f *AssetFile) Stat() (os.FileInfo, error) {
+ 	return f, nil
+ }
