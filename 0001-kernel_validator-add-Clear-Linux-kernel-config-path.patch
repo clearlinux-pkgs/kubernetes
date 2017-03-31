@@ -1,0 +1,29 @@
+From 3b71d176d01fafc98bcf51333d7e50249adfc1d0 Mon Sep 17 00:00:00 2001
+From: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
+Date: Fri, 31 Mar 2017 16:36:02 -0600
+Subject: [PATCH] kernel_validator: add Clear Linux kernel config path
+
+Clear Linux OS store the kernel configuration file in
+/usr/lib/kernel. This patch adds this path to the possiblePaths
+variable.
+
+Signed-off-by: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
+---
+ test/e2e_node/system/kernel_validator.go | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/test/e2e_node/system/kernel_validator.go b/test/e2e_node/system/kernel_validator.go
+index 295706dca1..6ef84ec6be 100644
+--- a/test/e2e_node/system/kernel_validator.go
++++ b/test/e2e_node/system/kernel_validator.go
+@@ -173,6 +173,7 @@ func (k *KernelValidator) getKernelConfigReader() (io.Reader, error) {
+ 	possibePaths := []string{
+ 		"/proc/config.gz",
+ 		"/boot/config-" + k.kernelRelease,
++		"/usr/lib/kernel/config-" + k.kernelRelease,
+ 		"/usr/src/linux-" + k.kernelRelease + "/.config",
+ 		"/usr/src/linux/.config",
+ 	}
+-- 
+2.12.2
+
