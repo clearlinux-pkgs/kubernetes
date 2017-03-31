@@ -1,2 +1,14 @@
 install -m 755 -d %{buildroot}%{_bindir}
-install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/*
+install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kubeadm
+install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kubectl
+install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kubelet
+install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-proxy
+install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-controller-manager
+install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-scheduler
+install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-apiserver
+
+
+
+
+
+

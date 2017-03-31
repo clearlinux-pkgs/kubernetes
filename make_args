@@ -1,0 +1,1 @@
+WHAT="--use_go_build cmd/kubeadm cmd/kubectl cmd/kubelet cmd/kube-proxy cmd/kube-controller-manager cmd/kube-apiserver plugin/cmd/kube-scheduler" || true

@@ -1,1 +1,1 @@
-mkdir -p src/k8s.io/kubernetes
+rm -rf  %{buildroot}/_output/
