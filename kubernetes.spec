@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.6.0
-Release  : 7
+Release  : 8
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.6.0.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.6.0.tar.gz
 Source1  : kube-apiserver.service
@@ -14,7 +14,7 @@ Source4  : kube-scheduler.service
 Source5  : kubelet.service
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : Apache-2.0 BSD-2-Clause BSD-3-Clause CC-BY-SA-4.0 CC0-1.0 GPL-3.0 ISC LGPL-3.0 MIT MPL-2.0-no-copyleft-exception NCSA
+License  : Apache-2.0 BSD-2-Clause BSD-3-Clause CC-BY-SA-4.0 CC0-1.0 CDDL-1.0 ISC LGPL-3.0 MIT MPL-2.0-no-copyleft-exception NCSA
 Requires: kubernetes-bin
 Requires: kubernetes-config
 BuildRequires : go
@@ -46,17 +46,15 @@ config components for the kubernetes package.
 %setup -q -n kubernetes-1.6.0
 %patch1 -p1
 
-rm -rf  %{buildroot}/_output/
-
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1491002869
-make V=1  %{?_smp_mflags} WHAT="--use_go_build cmd/kubeadm cmd/kubectl cmd/kubelet cmd/kube-proxy cmd/kube-controller-manager cmd/kube-apiserver plugin/cmd/kube-scheduler" || true
+export SOURCE_DATE_EPOCH=1491318560
+make V=1 WHAT="--use_go_build cmd/kubeadm cmd/kubectl cmd/kubelet cmd/kube-proxy cmd/kube-controller-manager cmd/kube-apiserver plugin/cmd/kube-scheduler"
 
 %install
-export SOURCE_DATE_EPOCH=1491002869
+export SOURCE_DATE_EPOCH=1491318560
 rm -rf %{buildroot}
-output_path="_output/local/go/bin"
+output_path="_output/bin/"
 mkdir -p %{buildroot}/usr/lib/systemd/system
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/systemd/system/kube-apiserver.service
 install -m 0644 %{SOURCE2} %{buildroot}/usr/lib/systemd/system/kube-controller-manager.service
