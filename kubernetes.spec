@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.6.1
-Release  : 14
+Release  : 15
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.6.1.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.6.1.tar.gz
 Source1  : kube-apiserver.service
@@ -48,11 +48,11 @@ config components for the kubernetes package.
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1491858524
+export SOURCE_DATE_EPOCH=1491945830
 make V=1 WHAT="--use_go_build cmd/kubeadm cmd/kubectl cmd/kubelet cmd/kube-proxy cmd/kube-controller-manager cmd/kube-apiserver plugin/cmd/kube-scheduler"
 
 %install
-export SOURCE_DATE_EPOCH=1491858524
+export SOURCE_DATE_EPOCH=1491945830
 rm -rf %{buildroot}
 output_path="_output/bin/"
 mkdir -p %{buildroot}/usr/lib/systemd/system
