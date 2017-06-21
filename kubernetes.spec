@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.6.6
-Release  : 20
+Release  : 21
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.6.6.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.6.6.tar.gz
 Source1  : kube-apiserver.service
@@ -20,6 +20,7 @@ Requires: kubernetes-config
 BuildRequires : go
 BuildRequires : rsync
 Patch1: 0001-kernel_validator-add-Clear-Linux-kernel-config-path.patch
+Patch2: 0001-handle-distro-cni-binaries.patch
 
 %description
 Gcfg reads INI-style configuration files into Go structs;
@@ -45,17 +46,18 @@ config components for the kubernetes package.
 %prep
 %setup -q -n kubernetes-1.6.6
 %patch1 -p1
+%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1498065367
+export SOURCE_DATE_EPOCH=1498083213
 make V=1 WHAT="--use_go_build cmd/kubeadm cmd/kubectl cmd/kubelet cmd/kube-proxy cmd/kube-controller-manager cmd/kube-apiserver plugin/cmd/kube-scheduler"
 
 %install
-export SOURCE_DATE_EPOCH=1498065367
+export SOURCE_DATE_EPOCH=1498083213
 rm -rf %{buildroot}
 output_path="_output/bin/"
 mkdir -p %{buildroot}/usr/lib/systemd/system
