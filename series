@@ -1,2 +1,3 @@
 0001-kernel_validator-add-Clear-Linux-kernel-config-path.patch
-0001-handle-distro-cni-binaries.patch
+#0001-handle-distro-cni-binaries.patch
+build.patch

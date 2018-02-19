@@ -1,0 +1,17 @@
+--- kubernetes-1.9.3/hack/lib/golang.sh~	2018-02-06 07:29:28.000000000 +0000
++++ kubernetes-1.9.3/hack/lib/golang.sh	2018-02-19 15:07:42.232418941 +0000
+@@ -323,14 +323,6 @@
+   go_version=($(go version))
+   local minimum_go_version
+   minimum_go_version=go1.9.1
+-  if [[ "${go_version[2]}" < "${minimum_go_version}" && "${go_version[2]}" != "devel" ]]; then
+-    kube::log::usage_from_stdin <<EOF
+-Detected go version: ${go_version[*]}.
+-Kubernetes requires ${minimum_go_version} or greater.
+-Please install ${minimum_go_version} or later.
+-EOF
+-    return 2
+-  fi
+ }
+ 
+ # kube::golang::setup_env will check that the `go` commands is available in
