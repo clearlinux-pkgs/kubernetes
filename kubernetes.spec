@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.11.1
-Release  : 40
+Release  : 41
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.11.1.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.11.1.tar.gz
 Source1  : kube-apiserver.service
@@ -69,11 +69,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1535037229
+export SOURCE_DATE_EPOCH=1535073808
 make all WHAT="cmd/kubeadm cmd/kubectl cmd/kubelet cmd/kube-proxy cmd/kube-controller-manager cmd/kube-apiserver cmd/kube-scheduler"
 
 %install
-export SOURCE_DATE_EPOCH=1535037229
+export SOURCE_DATE_EPOCH=1535073808
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/kubernetes
 cp LICENSE %{buildroot}/usr/share/doc/kubernetes/LICENSE
