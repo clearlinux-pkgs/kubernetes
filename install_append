@@ -6,9 +6,5 @@ install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-proxy
 install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-controller-manager
 install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-scheduler
 install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-apiserver
-
-
-
-
-
-
+install -m 755 -d %{buildroot}/usr/lib/sysctl.d
+install -m 0644 60-k8s-sysctl.conf %{buildroot}/usr/lib/sysctl.d/60-k8s-sysctl.conf
