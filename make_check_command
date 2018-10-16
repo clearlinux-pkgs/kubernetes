@@ -1,0 +1,12 @@
+cat >excludetests <<EOF
+cmd/kubeadm/app/cmd/upgrade
+cmd/kubeadm/app/phases/certs
+cmd/kubeadm/app/phases/kubelet
+cmd/kubeadm/test/cmd
+pkg/kubectl/cmd/get
+pkg/kubectl/genericclioptions/resource
+pkg/kubelet
+pkg/kubelet/winstats
+EOF
+
+make test WHAT="`find ./cmd/kubeadm ./pkg/kubectl ./pkg/kubelet/ -name '*_test.go' -exec dirname '{}' \;|sort -u|grep -v -f excludetests|tr '\n' ' '`"
