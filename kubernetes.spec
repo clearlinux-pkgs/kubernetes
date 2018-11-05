@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.11.3
-Release  : 49
+Release  : 50
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.11.3.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.11.3.tar.gz
 Source1  : kube-apiserver.service
@@ -16,9 +16,8 @@ Summary  : Container Cluster Manager - CNI plugins
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSD-2-Clause-FreeBSD BSD-3-Clause CC-BY-4.0 CC-BY-SA-4.0 CC0-1.0 GPL-2.0 ISC LGPL-3.0 MIT MPL-2.0-no-copyleft-exception NCSA
 Requires: kubernetes-bin = %{version}-%{release}
-Requires: kubernetes-config = %{version}-%{release}
-Requires: kubernetes-data = %{version}-%{release}
 Requires: kubernetes-license = %{version}-%{release}
+Requires: kubernetes-services = %{version}-%{release}
 BuildRequires : buildreq-golang
 BuildRequires : curl
 BuildRequires : go
@@ -31,28 +30,11 @@ Binaries required to provision container networking.
 %package bin
 Summary: bin components for the kubernetes package.
 Group: Binaries
-Requires: kubernetes-data = %{version}-%{release}
-Requires: kubernetes-config = %{version}-%{release}
 Requires: kubernetes-license = %{version}-%{release}
+Requires: kubernetes-services = %{version}-%{release}
 
 %description bin
 bin components for the kubernetes package.
-
-
-%package config
-Summary: config components for the kubernetes package.
-Group: Default
-
-%description config
-config components for the kubernetes package.
-
-
-%package data
-Summary: data components for the kubernetes package.
-Group: Data
-
-%description data
-data components for the kubernetes package.
 
 
 %package license
@@ -61,6 +43,14 @@ Group: Default
 
 %description license
 license components for the kubernetes package.
+
+
+%package services
+Summary: services components for the kubernetes package.
+Group: Systemd services
+
+%description services
+services components for the kubernetes package.
 
 
 %prep
@@ -72,7 +62,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1539694502
+export SOURCE_DATE_EPOCH=1541402612
 make all WHAT="cmd/kubeadm cmd/kubectl cmd/kubelet cmd/kube-proxy cmd/kube-controller-manager cmd/kube-apiserver cmd/kube-scheduler"
 
 %check
@@ -93,7 +83,7 @@ EOF
 make test WHAT="`find ./cmd/kubeadm ./pkg/kubectl ./pkg/kubelet/ -name '*_test.go' -exec dirname '{}' \;|sort -u|grep -v -f excludetests|tr '\n' ' '`"
 
 %install
-export SOURCE_DATE_EPOCH=1539694502
+export SOURCE_DATE_EPOCH=1541402612
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kubernetes
 cp LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/LICENSE
@@ -357,29 +347,12 @@ install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-apiserver
 /usr/bin/kubectl
 /usr/bin/kubelet
 
-%files config
-%defattr(-,root,root,-)
-/usr/lib/systemd/system/kube-apiserver.service
-/usr/lib/systemd/system/kube-controller-manager.service
-/usr/lib/systemd/system/kube-proxy.service
-/usr/lib/systemd/system/kube-scheduler.service
-/usr/lib/systemd/system/kubelet.service
-
-%files data
-%defattr(-,root,root,-)
-/usr/share/package-licenses/kubernetes/cluster_juju_layers_kubeapi-load-balancer_copyright
-/usr/share/package-licenses/kubernetes/cluster_juju_layers_kubernetes-master_copyright
-/usr/share/package-licenses/kubernetes/cluster_juju_layers_kubernetes-worker_copyright
-/usr/share/package-licenses/kubernetes/vendor_github.com_docker_docker_NOTICE
-/usr/share/package-licenses/kubernetes/vendor_github.com_kr_pretty_License
-/usr/share/package-licenses/kubernetes/vendor_github.com_kr_text_License
-/usr/share/package-licenses/kubernetes/vendor_github.com_prometheus_client_golang_NOTICE
-/usr/share/package-licenses/kubernetes/vendor_github.com_storageos_go-api_LICENCE
-/usr/share/package-licenses/kubernetes/vendor_github.com_tools_godep_License
-
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/kubernetes/LICENSE
+/usr/share/package-licenses/kubernetes/cluster_juju_layers_kubeapi-load-balancer_copyright
+/usr/share/package-licenses/kubernetes/cluster_juju_layers_kubernetes-master_copyright
+/usr/share/package-licenses/kubernetes/cluster_juju_layers_kubernetes-worker_copyright
 /usr/share/package-licenses/kubernetes/staging_src_k8s.io_api_LICENSE
 /usr/share/package-licenses/kubernetes/staging_src_k8s.io_apiextensions-apiserver_LICENSE
 /usr/share/package-licenses/kubernetes/staging_src_k8s.io_apimachinery_LICENSE
@@ -443,6 +416,7 @@ install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-apiserver
 /usr/share/package-licenses/kubernetes/vendor_github.com_dgrijalva_jwt-go_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_docker_distribution_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_docker_docker_LICENSE
+/usr/share/package-licenses/kubernetes/vendor_github.com_docker_docker_NOTICE
 /usr/share/package-licenses/kubernetes/vendor_github.com_docker_go-connections_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_docker_go-units_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_docker_libnetwork_LICENSE
@@ -504,6 +478,8 @@ install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-apiserver
 /usr/share/package-licenses/kubernetes/vendor_github.com_jteeuwen_go-bindata_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_kardianos_osext_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_kr_fs_LICENSE
+/usr/share/package-licenses/kubernetes/vendor_github.com_kr_pretty_License
+/usr/share/package-licenses/kubernetes/vendor_github.com_kr_text_License
 /usr/share/package-licenses/kubernetes/vendor_github.com_kubernetes_repo-infra_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_libopenstorage_openstorage_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_lpabon_godbc_LICENSE
@@ -542,6 +518,7 @@ install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-apiserver
 /usr/share/package-licenses/kubernetes/vendor_github.com_pmezard_go-difflib_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_pquerna_cachecontrol_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_prometheus_client_golang_LICENSE
+/usr/share/package-licenses/kubernetes/vendor_github.com_prometheus_client_golang_NOTICE
 /usr/share/package-licenses/kubernetes/vendor_github.com_prometheus_client_model_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_prometheus_common_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_prometheus_procfs_LICENSE
@@ -561,9 +538,11 @@ install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-apiserver
 /usr/share/package-licenses/kubernetes/vendor_github.com_spf13_jwalterweatherman_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_spf13_pflag_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_spf13_viper_LICENSE
+/usr/share/package-licenses/kubernetes/vendor_github.com_storageos_go-api_LICENCE
 /usr/share/package-licenses/kubernetes/vendor_github.com_stretchr_objx_LICENSE.md
 /usr/share/package-licenses/kubernetes/vendor_github.com_stretchr_testify_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_syndtr_gocapability_LICENSE
+/usr/share/package-licenses/kubernetes/vendor_github.com_tools_godep_License
 /usr/share/package-licenses/kubernetes/vendor_github.com_ugorji_go_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_vishvananda_netlink_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_github.com_vishvananda_netns_LICENSE
@@ -600,3 +579,11 @@ install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-apiserver
 /usr/share/package-licenses/kubernetes/vendor_k8s.io_kube-openapi_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_k8s.io_utils_LICENSE
 /usr/share/package-licenses/kubernetes/vendor_vbom.ml_util_LICENSE
+
+%files services
+%defattr(-,root,root,-)
+/usr/lib/systemd/system/kube-apiserver.service
+/usr/lib/systemd/system/kube-controller-manager.service
+/usr/lib/systemd/system/kube-proxy.service
+/usr/lib/systemd/system/kube-scheduler.service
+/usr/lib/systemd/system/kubelet.service
