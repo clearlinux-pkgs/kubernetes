@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.11.3
-Release  : 51
+Release  : 52
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.11.3.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.11.3.tar.gz
 Source1  : kube-apiserver.service
@@ -37,6 +37,14 @@ Requires: kubernetes-services = %{version}-%{release}
 bin components for the kubernetes package.
 
 
+%package extras
+Summary: extras components for the kubernetes package.
+Group: Default
+
+%description extras
+extras components for the kubernetes package.
+
+
 %package license
 Summary: license components for the kubernetes package.
 Group: Default
@@ -62,7 +70,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1541402612
+export SOURCE_DATE_EPOCH=1542240786
 make all WHAT="cmd/kubeadm cmd/kubectl cmd/kubelet cmd/kube-proxy cmd/kube-controller-manager cmd/kube-apiserver cmd/kube-scheduler"
 
 %check
@@ -83,7 +91,7 @@ EOF
 make test WHAT="`find ./cmd/kubeadm ./pkg/kubectl ./pkg/kubelet/ -name '*_test.go' -exec dirname '{}' \;|sort -u|grep -v -f excludetests|tr '\n' ' '`"
 
 %install
-export SOURCE_DATE_EPOCH=1541402612
+export SOURCE_DATE_EPOCH=1542240786
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kubernetes
 cp LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/LICENSE
@@ -339,13 +347,20 @@ install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-apiserver
 
 %files bin
 %defattr(-,root,root,-)
+%exclude /usr/bin/kube-apiserver
+%exclude /usr/bin/kube-controller-manager
+%exclude /usr/bin/kube-proxy
+%exclude /usr/bin/kube-scheduler
+/usr/bin/kubeadm
+/usr/bin/kubectl
+/usr/bin/kubelet
+
+%files extras
+%defattr(-,root,root,-)
 /usr/bin/kube-apiserver
 /usr/bin/kube-controller-manager
 /usr/bin/kube-proxy
 /usr/bin/kube-scheduler
-/usr/bin/kubeadm
-/usr/bin/kubectl
-/usr/bin/kubelet
 
 %files license
 %defattr(0644,root,root,0755)

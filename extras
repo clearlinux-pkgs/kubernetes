@@ -1,0 +1,4 @@
+/usr/bin/kube-apiserver
+/usr/bin/kube-controller-manager
+/usr/bin/kube-proxy
+/usr/bin/kube-scheduler
