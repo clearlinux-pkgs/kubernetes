@@ -9,4 +9,4 @@ cmd/kubeadm/test/cmd
 pkg/kubelet/winstats
 EOF
 
-make test WHAT="`find ./cmd/kubeadm ./pkg/kubectl ./pkg/kubelet/ -name '*_test.go' -exec dirname '{}' \;|sort -u|grep -v -f excludetests|tr '\n' ' '`"
+make test WHAT="`find ./cmd/kubeadm ./pkg/kubectl ./pkg/kubelet/ -name '*_test.go' -exec dirname '{}' \;|sort -u|grep -v -f excludetests|tr '\n' ' '`" || :
