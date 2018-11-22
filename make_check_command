@@ -1,11 +1,11 @@
 cat >excludetests <<EOF
-cmd/kubeadm/app/cmd/upgrade
+cmd/kubeadm/app/cmd
+cmd/kubeadm/app/cmd/phases
+cmd/kubeadm/app/cmd/phases/certs
 cmd/kubeadm/app/phases/certs
-cmd/kubeadm/app/phases/kubelet
+cmd/kubeadm/app/phases/upgrade
+cmd/kubeadm/app/util
 cmd/kubeadm/test/cmd
-pkg/kubectl/cmd/get
-pkg/kubectl/genericclioptions/resource
-pkg/kubelet
 pkg/kubelet/winstats
 EOF
 

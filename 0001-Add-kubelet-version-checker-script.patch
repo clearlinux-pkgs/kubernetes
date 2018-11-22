@@ -1,0 +1,57 @@
+From 7ce58f5f7658e5eb8972a2ccf58cf5686929aed1 Mon Sep 17 00:00:00 2001
+From: Mikko Ylinen <mikko.ylinen@intel.com>
+Date: Thu, 22 Nov 2018 08:07:06 +0000
+Subject: [PATCH] Add kubelet version checker script.
+
+Signed-off-by: Mikko Ylinen <mikko.ylinen@intel.com>
+---
+ kubelet-version-check.sh | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
+ create mode 100755 kubelet-version-check.sh
+
+diff --git a/kubelet-version-check.sh b/kubelet-version-check.sh
+new file mode 100755
+index 0000000..26632e7
+--- /dev/null
++++ b/kubelet-version-check.sh
+@@ -0,0 +1,37 @@
++#!/bin/sh
++
++MOTDD="/run/motd.d"
++MOTDF="$MOTDD/kubernetes-cluster-update.motd"
++VERSION_STAMP_FILE="/var/lib/kubelet/kubelet_version"
++
++if [ "$1" == "store" ]; then
++	/usr/bin/kubelet --version|awk '{print $2}' > $VERSION_STAMP_FILE
++	exit 0
++fi
++
++mkdir -p "$MOTDD"
++
++KUBELET_STATUS="`/usr/bin/systemctl is-active kubelet.service`"
++if [ "$KUBELET_STATUS" != "active" ]; then
++	exit 0
++fi
++
++CUR="v1.11.3"
++NEW="`/usr/bin/kubelet --version|awk '{print $2}'`"
++
++if [ -e "$VERSION_STAMP_FILE" ]; then
++	CUR=$(cat "$VERSION_STAMP_FILE")
++fi
++
++# SEMVER: vMAJOR[.MINOR[.PATCH[-PRERELEASE][+BUILD]]]
++CMAJOR=$(echo $CUR|tr 'v.+-' ' '|awk '{print $1}')
++CMINOR=$(echo $CUR|tr 'v.+-' ' '|awk '{print $2}')
++
++NMAJOR=$(echo $NEW|tr 'v.+-' ' '|awk '{print $1}')
++NMINOR=$(echo $NEW|tr 'v.+-' ' '|awk '{print $2}')
++
++if [ "$NMAJOR" -ne "$CMAJOR" -o "$NMINOR" -ne "$CMINOR" ]; then
++	echo -e " * Kubernetes version updated to $NEW. Update the cluster's master\n   control plane and nodes before restarting kubelet.service." > "$MOTDF"
++else
++	> "$MOTDF"
++fi
+-- 
+2.19.1
+

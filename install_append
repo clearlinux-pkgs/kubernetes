@@ -7,8 +7,7 @@ install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-controller-manag
 install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-scheduler
 install -p -m 755 -t %{buildroot}%{_bindir} ${output_path}/kube-apiserver
 
-
-
-
-
-
+mkdir -p %{buildroot}/usr/bin
+install -m0755 kubelet-version-check.sh %{buildroot}/usr/bin/kubelet-version-check.sh
+mkdir -p %{buildroot}/usr/lib/systemd/system/update-triggers.target.wants
+ln -sf ../kubelet-motd.service %{buildroot}/usr/lib/systemd/system/update-triggers.target.wants/kubelet-motd.service

@@ -1,0 +1,8 @@
+[Unit]
+Description=Notify users that kubernetes version change needs attention.
+BindsTo=update-triggers.target
+Before=motd-trigger.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/kubelet-version-check.sh
