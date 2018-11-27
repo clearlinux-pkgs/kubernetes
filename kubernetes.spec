@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.12.2
-Release  : 55
+Release  : 56
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.12.2.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.12.2.tar.gz
 Source1  : kube-apiserver.service
@@ -71,8 +71,9 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1542919701
+export SOURCE_DATE_EPOCH=1543288833
 make all WHAT="cmd/kubeadm cmd/kubectl cmd/kubelet cmd/kube-proxy cmd/kube-controller-manager cmd/kube-apiserver cmd/kube-scheduler"
+
 
 %check
 export LANG=C
@@ -92,7 +93,7 @@ EOF
 make test WHAT="`find ./cmd/kubeadm ./pkg/kubectl ./pkg/kubelet/ -name '*_test.go' -exec dirname '{}' \;|sort -u|grep -v -f excludetests|tr '\n' ' '`" || :
 
 %install
-export SOURCE_DATE_EPOCH=1542919701
+export SOURCE_DATE_EPOCH=1543288833
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kubernetes
 cp LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/LICENSE
