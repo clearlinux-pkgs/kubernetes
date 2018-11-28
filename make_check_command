@@ -6,6 +6,7 @@ cmd/kubeadm/app/phases/certs
 cmd/kubeadm/app/phases/upgrade
 cmd/kubeadm/app/util
 cmd/kubeadm/test/cmd
+pkg/kubelet/network/dns
 pkg/kubelet/winstats
 EOF
 
