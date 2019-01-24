@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.13.2
-Release  : 60
+Release  : 61
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.13.2.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.13.2.tar.gz
 Source1  : kube-apiserver.service
