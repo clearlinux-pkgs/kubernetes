@@ -14,17 +14,12 @@ new file mode 100755
 index 0000000..26632e7
 --- /dev/null
 +++ b/kubelet-version-check.sh
-@@ -0,1 +1,42 @@
+@@ -0,0 +1,37 @@
 +#!/bin/sh
 +
 +MOTDD="/run/motd.d"
 +MOTDF="$MOTDD/kubernetes-cluster-update.motd"
-+VERSION_STAMP_DIR="/var/lib/kubelet"
-+VERSION_STAMP_FILE="$VERSION_STAMP_DIR/kubelet_version"
-+
-+if [[ ! -d $VERSION_STAMP_DIR ]]; then
-+       mkdir -p $VERSION_STAMP_DIR
-+fi
++VERSION_STAMP_FILE="/var/lib/kubelet/kubelet_version"
 +
 +if [ "$1" == "store" ]; then
 +	/usr/bin/kubelet --version|awk '{print $2}' > $VERSION_STAMP_FILE
