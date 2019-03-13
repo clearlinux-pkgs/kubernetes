@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.13.4
-Release  : 64
+Release  : 65
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.13.4.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.13.4.tar.gz
 Source1  : kube-apiserver.service
@@ -24,6 +24,7 @@ BuildRequires : curl
 BuildRequires : go
 BuildRequires : rsync
 Patch1: 0001-Add-kubelet-version-checker-script.patch
+Patch2: 0002-UPSTREAM-kubeadm-Support-5_0-Linux-Kernel.patch
 
 %description
 Binaries required to provision container networking.
@@ -65,13 +66,14 @@ services components for the kubernetes package.
 %prep
 %setup -q -n kubernetes-1.13.4
 %patch1 -p1
+%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1551372807
+export SOURCE_DATE_EPOCH=1552518098
 export LDFLAGS="${LDFLAGS} -fno-lto"
 make all WHAT="cmd/kubeadm cmd/kubectl cmd/kubelet cmd/kube-proxy cmd/kube-controller-manager cmd/kube-apiserver cmd/kube-scheduler"
 
@@ -97,7 +99,7 @@ EOF
 make test WHAT="`find ./cmd/kubeadm ./pkg/kubectl ./pkg/kubelet/ -name '*_test.go' -exec dirname '{}' \;|sort -u|grep -v -f excludetests|tr '\n' ' '`" || :
 
 %install
-export SOURCE_DATE_EPOCH=1551372807
+export SOURCE_DATE_EPOCH=1552518098
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kubernetes
 cp LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/LICENSE
