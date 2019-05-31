@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.14.2
-Release  : 70
+Release  : 72
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.14.2.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.14.2.tar.gz
 Source1  : kube-apiserver.service
@@ -24,6 +24,7 @@ BuildRequires : curl
 BuildRequires : go
 BuildRequires : rsync
 Patch1: 0001-Add-kubelet-version-checker-script.patch
+Patch2: CVE-2019-11245.patch
 
 %description
 Binaries required to provision container networking.
@@ -65,18 +66,19 @@ services components for the kubernetes package.
 %prep
 %setup -q -n kubernetes-1.14.2
 %patch1 -p1
+%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1559173298
+export SOURCE_DATE_EPOCH=1559343228
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$CFLAGS -fno-lto "
-export FFLAGS="$CFLAGS -fno-lto "
-export CXXFLAGS="$CXXFLAGS -fno-lto "
+export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 make all WHAT="cmd/kubeadm cmd/kubectl cmd/kubelet cmd/kube-proxy cmd/kube-controller-manager cmd/kube-apiserver cmd/kube-scheduler"
 
 
@@ -101,7 +103,7 @@ EOF
 make test WHAT="`find ./cmd/kubeadm ./pkg/kubectl ./pkg/kubelet/ -name '*_test.go' -exec dirname '{}' \;|sort -u|grep -v -f excludetests|tr '\n' ' '`" || :
 
 %install
-export SOURCE_DATE_EPOCH=1559173298
+export SOURCE_DATE_EPOCH=1559343228
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kubernetes
 cp LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/LICENSE
