@@ -10,6 +10,7 @@ pkg/kubelet/cm/devicemanager
 pkg/kubelet/kuberuntime
 pkg/kubelet/network/dns
 pkg/kubelet/winstats
+pkg/kubelet/oom
 EOF
 
 make test WHAT="`find ./cmd/kubeadm ./pkg/kubectl ./pkg/kubelet/ -name '*_test.go' -exec dirname '{}' \;|sort -u|grep -v -f excludetests|tr '\n' ' '`" || :
