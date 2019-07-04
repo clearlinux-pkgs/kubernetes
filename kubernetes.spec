@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.15.0
-Release  : 75
+Release  : 76
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.15.0.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.15.0.tar.gz
 Source1  : kube-apiserver.service
@@ -24,6 +24,7 @@ BuildRequires : curl
 BuildRequires : go
 BuildRequires : rsync
 Patch1: 0001-Add-kubelet-version-checker-script.patch
+Patch2: 0002-add-systemd-link-file-which-explicitly-sets-macaddr-policy.patch
 
 %description
 Binaries required to provision container networking.
@@ -65,13 +66,14 @@ services components for the kubernetes package.
 %prep
 %setup -q -n kubernetes-1.15.0
 %patch1 -p1
+%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1561581781
+export SOURCE_DATE_EPOCH=1562284455
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -102,7 +104,7 @@ EOF
 make test WHAT="`find ./cmd/kubeadm ./pkg/kubectl ./pkg/kubelet/ -name '*_test.go' -exec dirname '{}' \;|sort -u|grep -v -f excludetests|tr '\n' ' '`" || :
 
 %install
-export SOURCE_DATE_EPOCH=1561581781
+export SOURCE_DATE_EPOCH=1562284455
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kubernetes
 cp Godeps/LICENSES %{buildroot}/usr/share/package-licenses/kubernetes/Godeps_LICENSES
@@ -383,10 +385,13 @@ mkdir -p %{buildroot}/usr/bin
 install -m0755 kubelet-version-check.sh %{buildroot}/usr/bin/kubelet-version-check.sh
 mkdir -p %{buildroot}/usr/lib/systemd/system/update-triggers.target.wants
 ln -sf ../kubelet-motd.service %{buildroot}/usr/lib/systemd/system/update-triggers.target.wants/kubelet-motd.service
+mkdir -p %{buildroot}/usr/lib/systemd/network/
+install -m0644 70-vxlan.link %{buildroot}/usr/lib/systemd/network/70-vxlan.link
 ## install_append end
 
 %files
 %defattr(-,root,root,-)
+/usr/lib/systemd/network/70-vxlan.link
 
 %files bin
 %defattr(-,root,root,-)

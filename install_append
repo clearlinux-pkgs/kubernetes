@@ -11,3 +11,6 @@ mkdir -p %{buildroot}/usr/bin
 install -m0755 kubelet-version-check.sh %{buildroot}/usr/bin/kubelet-version-check.sh
 mkdir -p %{buildroot}/usr/lib/systemd/system/update-triggers.target.wants
 ln -sf ../kubelet-motd.service %{buildroot}/usr/lib/systemd/system/update-triggers.target.wants/kubelet-motd.service
+mkdir -p %{buildroot}/usr/lib/systemd/network/
+install -m0644 70-vxlan.link %{buildroot}/usr/lib/systemd/network/70-vxlan.link
+
