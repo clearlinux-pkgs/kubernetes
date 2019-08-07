@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.15.2
-Release  : 79
+Release  : 80
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.15.2.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.15.2.tar.gz
 Source1  : kube-apiserver.service
@@ -73,7 +73,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1565110647
+export SOURCE_DATE_EPOCH=1565217010
 export GCC_IGNORE_WERROR=1
 export GOPROXY=file:///usr/share/goproxy
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -105,7 +105,7 @@ EOF
 make test WHAT="`find ./cmd/kubeadm ./pkg/kubectl ./pkg/kubelet/ -name '*_test.go' -exec dirname '{}' \;|sort -u|grep -v -f excludetests|tr '\n' ' '`" || :
 
 %install
-export SOURCE_DATE_EPOCH=1565110647
+export SOURCE_DATE_EPOCH=1565217010
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kubernetes
 cp Godeps/LICENSES %{buildroot}/usr/share/package-licenses/kubernetes/Godeps_LICENSES
