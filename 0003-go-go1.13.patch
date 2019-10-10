@@ -1,0 +1,12 @@
+ diff a/hack/lib/init.sh b/hack/lib/init.sh
+--- ../orig/kubernetes-1.16.0/./hack/lib/init.sh	2019-09-13 09:56:53.000000000 -0500
++++ ./hack/lib/init.sh	2019-09-20 11:17:17.132433744 -0500
+@@ -26,7 +27,7 @@ unset CDPATH
+ # explicitly reset to auto mode to avoid picking up user-set GO111MODULE preferences.
+ # As individual scripts (like hack/update-vendor.sh) make use of go modules,
+ # they can explicitly set GO111MODULE=on
+-export GO111MODULE=auto
++export GO111MODULE=off
+ 
+ # The root of the build/dist directory
+ KUBE_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"

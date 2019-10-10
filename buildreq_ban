@@ -1,5 +1,32 @@
 # This file contains build requirements that get picked up but are
 # undesirable. One entry per line, no whitespace.
+go-github.com-Azure-go-autorest-autorest
+go-github.com-Azure-go-autorest-autorest-adal
+go-github.com-Azure-go-autorest-autorest-date
+go-github.com-Azure-go-autorest-autorest-mocks
+go-github.com-Azure-go-autorest-autorest-to
+go-github.com-Azure-go-autorest-autorest-validation
+go-github.com-Azure-go-autorest-logger
+go-github.com-Azure-go-autorest-tracing
+go-github.com-armon-consul-api
+go-github.com-caddyserver-caddy
+go-github.com-checkpoint-restore-go-criu
+go-github.com-coredns-corefile-migration
+go-github.com-coreos-go-etcd
+go-github.com-fatih-color
+go-github.com-go-bindata-go-bindata
+go-github.com-kr-pty
+go-github.com-mattn-go-colorable
+go-github.com-mattn-go-isatty
+go-github.com-mitchellh-go-homedir
+go-github.com-thecodeteam-goscaleio
+go-github.com-ugorji-go-codec
+go-github.com-xordataexchange-crypt
+go-gopkg.in-airbrake-gobrake.v2
+go-gopkg.in-gemnasium-logrus-airbrake-hook.v2
+go-gotest.tools-gotestsum
+go-honnef.co-go-tools
+go-k8s.io-kubectl
 go-bitbucket.org-bertimus9-systemstat
 go-cloud.google.com-go
 go-github.com-Azure-azure-sdk-for-go
