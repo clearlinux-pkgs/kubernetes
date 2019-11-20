@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.16.3
-Release  : 89
+Release  : 90
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.16.3.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.16.3.tar.gz
 Source1  : kube-apiserver.service
@@ -76,7 +76,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1573680193
+export SOURCE_DATE_EPOCH=1574293077
 export GCC_IGNORE_WERROR=1
 export GOPROXY=file:///usr/share/goproxy
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -108,7 +108,7 @@ EOF
 make test WHAT="`find ./cmd/kubeadm ./pkg/kubectl ./pkg/kubelet/ -name '*_test.go' -exec dirname '{}' \;|sort -u|grep -v -f excludetests|tr '\n' ' '`" || :
 
 %install
-export SOURCE_DATE_EPOCH=1573680193
+export SOURCE_DATE_EPOCH=1574293077
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kubernetes
 cp %{_builddir}/kubernetes-1.16.3/Godeps/LICENSES %{buildroot}/usr/share/package-licenses/kubernetes/1755a482d91894da939aa465773aa25b5d12fb76
@@ -418,6 +418,10 @@ install -m0644 70-vxlan.link %{buildroot}/usr/lib/systemd/network/70-vxlan.link
 /usr/bin/kube-controller-manager
 /usr/bin/kube-proxy
 /usr/bin/kube-scheduler
+/usr/lib/systemd/system/kube-apiserver.service
+/usr/lib/systemd/system/kube-controller-manager.service
+/usr/lib/systemd/system/kube-proxy.service
+/usr/lib/systemd/system/kube-scheduler.service
 
 %files license
 %defattr(0644,root,root,0755)
@@ -575,10 +579,6 @@ install -m0644 70-vxlan.link %{buildroot}/usr/lib/systemd/network/70-vxlan.link
 
 %files services
 %defattr(-,root,root,-)
-/usr/lib/systemd/system/kube-apiserver.service
-/usr/lib/systemd/system/kube-controller-manager.service
-/usr/lib/systemd/system/kube-proxy.service
-/usr/lib/systemd/system/kube-scheduler.service
 /usr/lib/systemd/system/kubelet-motd.service
 /usr/lib/systemd/system/kubelet.service
 /usr/lib/systemd/system/update-triggers.target.wants/kubelet-motd.service
