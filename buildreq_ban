@@ -1,5 +1,12 @@
 # This file contains build requirements that get picked up but are
 # undesirable. One entry per line, no whitespace.
+go-github.com-dustin-go-humanize
+go-github.com-go-stack-stack
+go-github.com-tidwall-pretty
+go-github.com-vektah-gqlparser
+go-go.etcd.io-etcd
+go-go.mongodb.org-mongo-driver
+go-k8s.io-system-validators
 go-bitbucket.org-bertimus9-systemstat
 go-cloud.google.com-go
 go-github.com-armon-circbuf

@@ -3,6 +3,7 @@ cmd/kubeadm/app/cmd
 cmd/kubeadm/app/cmd/phases
 cmd/kubeadm/app/cmd/phases/certs
 cmd/kubeadm/app/phases/certs
+cmd/kubeadm/app/phases/copycerts
 cmd/kubeadm/app/phases/upgrade
 cmd/kubeadm/app/util
 cmd/kubeadm/test/cmd
