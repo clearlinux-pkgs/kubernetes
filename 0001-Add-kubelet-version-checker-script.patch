@@ -1,4 +1,4 @@
-From 7ce58f5f7658e5eb8972a2ccf58cf5686929aed1 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mikko Ylinen <mikko.ylinen@intel.com>
 Date: Thu, 22 Nov 2018 08:07:06 +0000
 Subject: [PATCH] Add kubelet version checker script.
@@ -11,7 +11,7 @@ Signed-off-by: Mikko Ylinen <mikko.ylinen@intel.com>
 
 diff --git a/kubelet-version-check.sh b/kubelet-version-check.sh
 new file mode 100755
-index 0000000..26632e7
+index 00000000..26632e70
 --- /dev/null
 +++ b/kubelet-version-check.sh
 @@ -0,0 +1,37 @@
@@ -52,6 +52,3 @@ index 0000000..26632e7
 +else
 +	> "$MOTDF"
 +fi
--- 
-2.19.1
-

@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Humberto Nanni Hernandez <humberto.nanni@intel.com>
+Date: Thu, 4 Jul 2019 18:54:46 -0500
+Subject: [PATCH] add systemd link file to set macaddr policy
+
+added a systemd.link file meant to explicitly set the macaddr policy of
+virtual interfaces
+
+This is needed to fix: https://github.com/clearlinux/distribution/issues/904
+---
+ 70-vxlan.link | 6 ++++++
+ 1 file changed, 6 insertions(+)
+ create mode 100644 70-vxlan.link
+
+diff --git a/70-vxlan.link b/70-vxlan.link
+new file mode 100644
+index 00000000..29d7c38c
+--- /dev/null
++++ b/70-vxlan.link
+@@ -0,0 +1,6 @@
++[Match]
++Driver=vxlan
++
++[Link]
++NamePolicy=keep kernel database onboard slot path
++MACAddressPolicy=none
