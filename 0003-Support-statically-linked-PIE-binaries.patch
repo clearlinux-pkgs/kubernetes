@@ -1,0 +1,32 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Wed, 22 Jul 2020 17:55:40 -0700
+Subject: [PATCH] Support statically linked PIE binaries
+
+Upstream-Status: Inappropriate
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ hack/lib/golang.sh | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/hack/lib/golang.sh b/hack/lib/golang.sh
+index b646bbe2..507fab14 100755
+--- a/hack/lib/golang.sh
++++ b/hack/lib/golang.sh
+@@ -697,12 +697,13 @@ kube::golang::build_binaries_for_platform() {
+     build_args=(
+       -installsuffix static
+       ${goflags:+"${goflags[@]}"}
++      -buildmode=pie
+       -gcflags "${gogcflags:-}"
+       -asmflags "${goasmflags:-}"
+-      -ldflags "${goldflags:-}"
+-      -tags "${gotags:-}"
++      -ldflags "${goldflags:-} -extldflags '-static-pie'"
++      -tags "${gotags:-},netgo,osusergo"
+     )
+-    CGO_ENABLED=0 kube::golang::build_some_binaries "${statics[@]}"
++    kube::golang::build_some_binaries "${statics[@]}"
+   fi
+ 
+   if [[ "${#nonstatics[@]}" != 0 ]]; then

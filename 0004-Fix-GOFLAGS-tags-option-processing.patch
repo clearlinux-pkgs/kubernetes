@@ -1,0 +1,28 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Wed, 22 Jul 2020 18:12:14 -0700
+Subject: [PATCH] Fix GOFLAGS -tags option processing
+
+The sed substitution is correct, assuming that the GOFLAGS value is
+correctly formed, but the default behavior of printing should be turned
+off (with `-n`), and output should be printed only when a substitution
+occurs (`p` flag).
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ hack/lib/golang.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hack/lib/golang.sh b/hack/lib/golang.sh
+index 507fab14..6ea51232 100755
+--- a/hack/lib/golang.sh
++++ b/hack/lib/golang.sh
+@@ -791,7 +791,7 @@ kube::golang::build_binaries() {
+ 
+     # extract tags if any specified in GOFLAGS
+     # shellcheck disable=SC2001
+-    gotags="selinux,$(echo "${GOFLAGS:-}" | sed -e 's|.*-tags=\([^-]*\).*|\1|')"
++    gotags="selinux,$(echo "${GOFLAGS:-}" | sed -ne 's|.*-tags=\([^-]*\).*|\1|p')"
+ 
+     local -a targets=()
+     local arg
