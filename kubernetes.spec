@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.17.4
-Release  : 97
+Release  : 98
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.17.4.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.17.4.tar.gz
 Source1  : kube-apiserver.service
