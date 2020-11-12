@@ -10,7 +10,7 @@ Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
  1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/hack/lib/golang.sh b/hack/lib/golang.sh
-index b646bbe2..507fab14 100755
+index b646bbe2..34bfd80a 100755
 --- a/hack/lib/golang.sh
 +++ b/hack/lib/golang.sh
 @@ -697,12 +697,13 @@ kube::golang::build_binaries_for_platform() {
@@ -22,7 +22,7 @@ index b646bbe2..507fab14 100755
        -asmflags "${goasmflags:-}"
 -      -ldflags "${goldflags:-}"
 -      -tags "${gotags:-}"
-+      -ldflags "${goldflags:-} -extldflags '-static-pie'"
++      -ldflags "${goldflags:-} -linkmode external -extldflags '-static-pie'"
 +      -tags "${gotags:-},netgo,osusergo"
      )
 -    CGO_ENABLED=0 kube::golang::build_some_binaries "${statics[@]}"

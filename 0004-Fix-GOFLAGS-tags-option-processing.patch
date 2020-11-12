@@ -14,7 +14,7 @@ Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/hack/lib/golang.sh b/hack/lib/golang.sh
-index 507fab14..6ea51232 100755
+index 34bfd80a..c4452db3 100755
 --- a/hack/lib/golang.sh
 +++ b/hack/lib/golang.sh
 @@ -791,7 +791,7 @@ kube::golang::build_binaries() {

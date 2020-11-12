@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.17.7
-Release  : 100
+Release  : 101
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.17.7.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.17.7.tar.gz
 Source1  : kube-apiserver.service
@@ -80,7 +80,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1600209942
+export SOURCE_DATE_EPOCH=1605151308
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -113,9 +113,10 @@ EOF
 make test WHAT="`find ./cmd/kubeadm ./pkg/kubectl ./pkg/kubelet/ -name '*_test.go' -exec dirname '{}' \;|sort -u|grep -v -f excludetests|tr '\n' ' '`" || :
 
 %install
-export SOURCE_DATE_EPOCH=1600209942
+export SOURCE_DATE_EPOCH=1605151308
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kubernetes
+cp %{_builddir}/kubernetes-1.17.7/Godeps/LICENSES %{buildroot}/usr/share/package-licenses/kubernetes/34755b0d567dede7ad200da9c9df22056433123b
 cp %{_builddir}/kubernetes-1.17.7/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/2b8b815229aa8a61e483fb4ba0588b8b6c491890
 cp %{_builddir}/kubernetes-1.17.7/logo/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/0bccca1ab4a8eaeeb611df1dbc3b2c0de405d6f7
 cp %{_builddir}/kubernetes-1.17.7/staging/src/k8s.io/api/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/2b8b815229aa8a61e483fb4ba0588b8b6c491890
@@ -462,6 +463,7 @@ install -m0644 70-vxlan.link %{buildroot}/usr/lib/systemd/network/70-vxlan.link
 /usr/share/package-licenses/kubernetes/3110e55750143a84918d7423febc9c83a55bc28c
 /usr/share/package-licenses/kubernetes/318dc4af5ea975b426db65053b4f16ca91341d15
 /usr/share/package-licenses/kubernetes/33cd8e150548e595fbe201c6ca9df582976e71db
+/usr/share/package-licenses/kubernetes/34755b0d567dede7ad200da9c9df22056433123b
 /usr/share/package-licenses/kubernetes/3486abfdd66d1bd30f9edeeb779a7f04d043d457
 /usr/share/package-licenses/kubernetes/376caa2cd54c4196280157d071524614350e7ce8
 /usr/share/package-licenses/kubernetes/38973a004e1799ac0edfa96e48084e6d1e250a74
