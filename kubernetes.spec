@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.19.7
-Release  : 111
+Release  : 112
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.19.7.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.19.7.tar.gz
 Source1  : kube-apiserver.service
@@ -86,10 +86,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
 export SOURCE_DATE_EPOCH=1612907784
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
-export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
+export FCFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
+export FFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
+export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
 make  all WHAT="cmd/kubeadm cmd/kubectl cmd/kubelet cmd/kube-proxy cmd/kube-controller-manager cmd/kube-apiserver cmd/kube-scheduler" GOFLAGS="-buildmode=pie"
 
 
