@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.19.7
-Release  : 115
+Release  : 116
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.19.7.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.19.7.tar.gz
 Source1  : kube-apiserver.service
@@ -27,8 +27,6 @@ BuildRequires : go
 BuildRequires : rsync
 Patch1: 0001-Add-kubelet-version-checker-script.patch
 Patch2: 0002-add-systemd-link-file-to-set-macaddr-policy.patch
-Patch3: 0003-Support-statically-linked-PIE-binaries.patch
-Patch4: 0004-Fix-GOFLAGS-tags-option-processing.patch
 
 %description
 Package warnings implements error handling with non-fatal errors (warnings).
@@ -76,21 +74,19 @@ services components for the kubernetes package.
 cd %{_builddir}/kubernetes-1.19.7
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1612907784
+export SOURCE_DATE_EPOCH=1626197868
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
 export FCFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
 export FFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
 export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
-make  all WHAT="cmd/kubeadm cmd/kubectl cmd/kubelet cmd/kube-proxy cmd/kube-controller-manager cmd/kube-apiserver cmd/kube-scheduler" GOFLAGS="-buildmode=pie"
+make  all WHAT="cmd/kubeadm cmd/kubectl cmd/kubelet cmd/kube-proxy cmd/kube-controller-manager cmd/kube-apiserver cmd/kube-scheduler"
 
 
 %check
@@ -117,7 +113,7 @@ EOF
 make test WHAT="`find ./cmd/kubeadm ./pkg/kubectl ./pkg/kubelet/ -name '*_test.go' -exec dirname '{}' \;|sort -u|grep -v -f excludetests|tr '\n' ' '`" || :
 
 %install
-export SOURCE_DATE_EPOCH=1612907784
+export SOURCE_DATE_EPOCH=1626197868
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kubernetes
 cp %{_builddir}/kubernetes-1.19.7/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/2b8b815229aa8a61e483fb4ba0588b8b6c491890
@@ -257,6 +253,7 @@ cp %{_builddir}/kubernetes-1.19.7/LICENSES/vendor/github.com/opencontainers/runt
 cp %{_builddir}/kubernetes-1.19.7/LICENSES/vendor/github.com/opencontainers/selinux/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/f71e11b72d6b8a6d45e4ac2a4a09bdb090f2954b
 cp %{_builddir}/kubernetes-1.19.7/LICENSES/vendor/github.com/pelletier/go-toml/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/281ed34bd23d9888cc0e3e2d89e1df27b0609914
 cp %{_builddir}/kubernetes-1.19.7/LICENSES/vendor/github.com/peterbourgon/diskv/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/36cb2b59a00d42633d530b5c138af0a4112522b2
+cp %{_builddir}/kubernetes-1.19.7/LICENSES/vendor/github.com/pkg/errors/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/6ba0d09ed4a7e0830597b8376b49e2f03e03fc0a
 cp %{_builddir}/kubernetes-1.19.7/LICENSES/vendor/github.com/pquerna/cachecontrol/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/e8188c737af35581a26afc556f2678c55dff3d38
 cp %{_builddir}/kubernetes-1.19.7/LICENSES/vendor/github.com/prometheus/client_golang/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/a7c7df25e3d578898daea58e836b214977bbb696
 cp %{_builddir}/kubernetes-1.19.7/LICENSES/vendor/github.com/prometheus/client_model/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/e9a9d2850f1c073f15f8c5d66d6a2c68516b8038
@@ -337,6 +334,7 @@ cp %{_builddir}/kubernetes-1.19.7/hack/tools/LICENSES/vendor/github.com/konsorte
 cp %{_builddir}/kubernetes-1.19.7/hack/tools/LICENSES/vendor/github.com/mattn/go-colorable/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/36a4beb03e3b91e50ba709db6e03e067ec82a64c
 cp %{_builddir}/kubernetes-1.19.7/hack/tools/LICENSES/vendor/github.com/mattn/go-isatty/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/18491df45c5d8dd444ba85ccbe217c78e9273fe1
 cp %{_builddir}/kubernetes-1.19.7/hack/tools/LICENSES/vendor/github.com/pelletier/go-toml/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/281ed34bd23d9888cc0e3e2d89e1df27b0609914
+cp %{_builddir}/kubernetes-1.19.7/hack/tools/LICENSES/vendor/github.com/pkg/errors/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/6ba0d09ed4a7e0830597b8376b49e2f03e03fc0a
 cp %{_builddir}/kubernetes-1.19.7/hack/tools/LICENSES/vendor/github.com/sirupsen/logrus/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/b4ac4eddc4dddaeaaf7cff9a4cfbaabb6b990a06
 cp %{_builddir}/kubernetes-1.19.7/hack/tools/LICENSES/vendor/github.com/spf13/pflag/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/984e76b2357cee8f2af4cabb48c8c9b6a75d07c8
 cp %{_builddir}/kubernetes-1.19.7/hack/tools/LICENSES/vendor/golang.org/x/lint/LICENSE %{buildroot}/usr/share/package-licenses/kubernetes/8bd34da822b82f8c090e98a4ad7cf1e61e5d364c
@@ -828,6 +826,7 @@ install -m0644 70-vxlan.link %{buildroot}/usr/lib/systemd/network/70-vxlan.link
 /usr/share/package-licenses/kubernetes/66a9502ecba0bae239ca6ba2c3e8a2fe5558a893
 /usr/share/package-licenses/kubernetes/66c5c002958b1f31f74410b353972d622d74e007
 /usr/share/package-licenses/kubernetes/69b32d247d995f7afff77c77dfa72c3e0c05f8db
+/usr/share/package-licenses/kubernetes/6ba0d09ed4a7e0830597b8376b49e2f03e03fc0a
 /usr/share/package-licenses/kubernetes/6c7f03835b0ceee10aa140223b608017a7b49953
 /usr/share/package-licenses/kubernetes/6cc282f354fc82a318eaa9c176b2ef648b132298
 /usr/share/package-licenses/kubernetes/6e3ed596127a6e096a4355a055d57a4adbd45482
