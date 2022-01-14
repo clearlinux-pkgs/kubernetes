@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.20.13
-Release  : 123
+Release  : 124
 URL      : https://github.com/kubernetes/kubernetes/archive/refs/tags/v1.20.13.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/refs/tags/v1.20.13.tar.gz
 Source1  : kube-apiserver.service
