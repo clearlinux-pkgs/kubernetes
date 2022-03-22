@@ -1,2 +1,3 @@
 0001-Add-kubelet-version-checker-script.patch
 0002-add-systemd-link-file-to-set-macaddr-policy.patch
+0003-Update-reflect2-vendor-for-golang1.18.patch
