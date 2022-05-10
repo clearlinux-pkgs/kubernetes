@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.21.11
-Release  : 130
+Release  : 131
 URL      : https://github.com/kubernetes/kubernetes/archive/refs/tags/v1.21.11.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/refs/tags/v1.21.11.tar.gz
 Source1  : kube-apiserver.service
