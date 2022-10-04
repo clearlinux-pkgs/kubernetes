@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.25.0
-Release  : 139
+Release  : 140
 URL      : https://github.com/kubernetes/kubernetes/archive/refs/tags/v1.25.0.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/refs/tags/v1.25.0.tar.gz
 Source1  : kube-apiserver.service
