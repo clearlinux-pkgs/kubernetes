@@ -4,7 +4,7 @@
 #
 Name     : kubernetes
 Version  : 1.26.0
-Release  : 146
+Release  : 147
 URL      : https://github.com/kubernetes/kubernetes/archive/v1.26.0/kubernetes-1.26.0.tar.gz
 Source0  : https://github.com/kubernetes/kubernetes/archive/v1.26.0/kubernetes-1.26.0.tar.gz
 Source1  : kube-apiserver.service
